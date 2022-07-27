@@ -29,7 +29,6 @@ public class TestController {
         System.out.println(name);
         return "Hello World!!!";
     }
-
     public static void main(String[] args) {
         ArrayList<Map<String, Object>> getExcelData = getExcelData();
         ArrayList<Map<String, Object>> getSingleList = new ArrayList<>();

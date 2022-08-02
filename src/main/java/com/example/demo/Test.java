@@ -1,7 +1,14 @@
 package com.example.demo;
 
-import java.io.*;
-import java.util.Properties;
+
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import org.apache.http.HttpEntity;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 
 /**
  * TODO
@@ -10,13 +17,30 @@ import java.util.Properties;
  * @since 1.0.0
  */
 public class Test {
+    // https://m.1234567.com.cn/data/FundSuggestList.js
+
     public static void main(String[] args) {
-        Properties properties = new Properties();
+        String url = "https://m.1234567.com.cn/data/FundSuggestList.js";
+        String str = null;
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+        HttpGet httpGet = new HttpGet(url);
+        httpGet.addHeader("Content-Type", "application/json");
+        CloseableHttpResponse crossResponse;
         try {
-            properties.load(new FileReader("src\\main\\resources\\Baby.properties"));
-            System.out.println(properties.getProperty("testTxt"));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            crossResponse = httpClient.execute(httpGet);
+            HttpEntity crossEntity = crossResponse.getEntity();
+            str = EntityUtils.toString(crossEntity, "utf-8");
+            str = str.replace("\n", "");
+            str = str.replace("\t", "");
+            str = str.replace("\r", "");
+            str = str.replace(" ", "");
+            str = str.replace("FundSuggestList(", "");
+            str = str.replace(")", "");
+            JSONObject jsonObject = (JSONObject) JSONArray.parse(str);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
+
+
 }

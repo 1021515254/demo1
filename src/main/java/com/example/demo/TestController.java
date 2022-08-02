@@ -23,12 +23,14 @@ import java.util.*;
 @RestController
 public class TestController {
 
+
     @GetMapping("getUrl")
     public String getUrl(@RequestParam("name") String name) {
         int num = 0 / 0;
         System.out.println(name);
         return "Hello World!!!";
     }
+
     public static void main(String[] args) {
         ArrayList<Map<String, Object>> getExcelData = getExcelData();
         ArrayList<Map<String, Object>> getSingleList = new ArrayList<>();
